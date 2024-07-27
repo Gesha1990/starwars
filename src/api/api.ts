@@ -1,33 +1,73 @@
 import axios from 'axios';
-
-const instance = axios.create({
-  baseURL: 'https://sw-api.starnavi.io/',
-  headers: {}
-});
+import {
+  FilmsDataResponse,
+  CharactersDataResponse,
+  Character,
+  CharacterDataResponse
+} from '../interfaces/interfaces';
 
 export async function getAllStarWarsCharacters() {
-  const response = await instance.get('people/');
-  return response;
-  // const count = response.data.count;
-  // const numberOfPagesLeft = Math.ceil(count / 10);
-  // const characters = [];
-  // for (let i = 1; i <= numberOfPagesLeft; i++) {
-  //   const response = await instance.get(`people/?page=${i}`);
-  //   characters.push(...response.data.results);
-  // }
-  // return characters;
+  try {
+    const response: CharactersDataResponse = await axios.get(
+      'https://swapi.dev/api/people/'
+    );
+    const count = response.data.count;
+    // Number characters per page
+    const numberOfPagesLeft = Math.ceil(count / 10);
+    const characters: Character[] = [];
+    // Get all characters
+    for (let i = 1; i <= numberOfPagesLeft; i++) {
+      const response: CharactersDataResponse = await axios.get(
+        `https://swapi.dev/api/people/?page=${i}`
+      );
+      characters.push(...response.data.results);
+    }
+    return characters;
+  } catch (e) {
+    console.error('Error retrieving data:', e);
+    throw new Error('Request failed');
+  }
 }
+export async function getCharacterById(id: string) {
+  try {
+    const response: CharacterDataResponse = await axios.get(
+      `https://swapi.dev/api/people/${id}`
+    );
 
-export async function getCharacterById(id) {
-  const response = await instance.get(`people/${id}`);
-  return response.data;
+    return response.data;
+  } catch (e) {
+    console.error('Error retrieving data:', e);
+    throw new Error('Request failed');
+  }
 }
-export async function getAllStarWarsFilmsByCharacter(films) {
-  const filmsData = [];
-  films.forEach(async (filmId) => {
-    const response = await instance.get(`films/${filmId}`);
-    filmsData.push(response.data);
-  });
+export async function getAllStarWarsFilmsByCharacter(characterId: string) {
+  try {
+    const response: FilmsDataResponse = await axios.get(
+      `https://swapi.dev/api/films/?name=${characterId}`
+    );
 
-  return;
+    return response.data.results;
+  } catch (e) {
+    console.error('Error retrieving data:', e);
+    throw new Error('Request failed');
+  }
+}
+export async function getAllStarWarsStarShipsByCharacter(characterId: string) {
+  try {
+    const response: CharacterDataResponse = await axios.get(
+      `https://swapi.dev/api/people/${characterId}`
+    );
+    // Get all star ships data
+    const starshipResponse = [];
+    if (response.data.starships) {
+      for (const url of response.data.starships) {
+        const response = await axios.get(`${url}`);
+        starshipResponse.push(response.data);
+      }
+    }
+    return starshipResponse;
+  } catch (e) {
+    console.error('Error retrieving data:', e);
+    throw new Error('Request failed');
+  }
 }

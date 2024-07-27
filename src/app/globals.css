@@ -31,3 +31,16 @@ body {
     text-wrap: balance;
   }
 }
+.react-flow {
+  position: relative !important;
+  width: 90vw !important;
+  height: 80vh !important;
+  margin: 0 auto;
+  border: 1px solid black;
+}
+.react-flow__renderer {
+  position: static !important;
+}
+.react-flow__pane {
+  position: static !important;
+}
