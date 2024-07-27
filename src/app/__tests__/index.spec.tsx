@@ -1,6 +1,5 @@
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import RootLayout from '../layout';
 import Page from '../page';
 import Loading from '../loading';
 import Error from '../error';

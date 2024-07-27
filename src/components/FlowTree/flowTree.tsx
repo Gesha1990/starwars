@@ -10,14 +10,16 @@ import {
   Connection
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import { getNumberFromString } from '@/utils/utils';
+import {
+  getNumberFromString,
+  getStarShipEdges,
+  getStarShipNodes
+} from '@/utils/utils';
 import {
   Character,
   Film,
   FlowTreeProps,
-  Starship,
-  StarShipEdge,
-  StarShipNode
+  Starship
 } from '@/interfaces/interfaces';
 
 const initialNodes = (
@@ -34,19 +36,7 @@ const initialNodes = (
       width: 100
     };
   });
-  const starShipsNodes: StarShipNode[] = [];
-  starWarsShips.forEach((starShip, key) => {
-    starShip.films.forEach((filmUrl) => {
-      const filmId = getNumberFromString(filmUrl);
-      starShipsNodes.push({
-        id: `provider3-${starShip.id}-${filmId}`,
-        data: {
-          label: starShip.name
-        },
-        position: { x: 170 * key, y: 200 }
-      });
-    });
-  });
+  const starShipsNodes = getStarShipNodes(starWarsShips);
 
   return [
     {
@@ -75,18 +65,7 @@ const initialEdges = (
       target: `provider2-${film.episode_id}`
     };
   });
-  const shipsArr: StarShipEdge[] = [];
-  starWarsShips.forEach((ship) => {
-    ship.films.forEach((filmUrl: string) => {
-      const filmId = getNumberFromString(filmUrl);
-
-      shipsArr.push({
-        id: `provider3-${ship.id}-${filmId}`,
-        source: `provider2-${filmId}`,
-        target: `provider3-${ship.id}-${filmId}`
-      });
-    });
-  });
+  const shipsArr = getStarShipEdges(starWarsShips);
 
   return [...arrFilms, ...shipsArr];
 };
