@@ -105,3 +105,4 @@ export interface CharacterPageProps {
     id: string;
   };
 }
+export type If<F extends boolean, S, T> = F extends true ? S : T;

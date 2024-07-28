@@ -10,11 +10,7 @@ import {
   Connection
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import {
-  getNumberFromString,
-  getStarShipEdges,
-  getStarShipNodes
-} from '@/utils/utils';
+import { getNumberFromString, getStarShipEdgesOrNodes } from '@/utils/utils';
 import {
   Character,
   Film,
@@ -36,7 +32,7 @@ const initialNodes = (
       width: 100
     };
   });
-  const starShipsNodes = getStarShipNodes(starWarsShips);
+  const starShipsNodes = getStarShipEdgesOrNodes(starWarsShips, false);
 
   return [
     {
@@ -65,8 +61,7 @@ const initialEdges = (
       target: `provider2-${film.episode_id}`
     };
   });
-  const shipsArr = getStarShipEdges(starWarsShips);
-
+  const shipsArr = getStarShipEdgesOrNodes(starWarsShips, true);
   return [...arrFilms, ...shipsArr];
 };
 

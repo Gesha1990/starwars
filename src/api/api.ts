@@ -5,20 +5,22 @@ import {
   Character,
   CharacterDataResponse
 } from '../interfaces/interfaces';
+import { BASE_API_URL, NUMBER_CHARACTERS_PER_PAGE } from './const';
 
 export async function getAllStarWarsCharacters() {
   try {
     const response: CharactersDataResponse = await axios.get(
-      'https://swapi.dev/api/people/'
+      `${BASE_API_URL}/people/`
     );
-    const count = response.data.count;
-    // Number characters per page
-    const numberOfPagesLeft = Math.ceil(count / 10);
+    const countCharacters = response.data.count;
+    const numberOfPagesLeft = Math.ceil(
+      countCharacters / NUMBER_CHARACTERS_PER_PAGE
+    );
     const characters: Character[] = [];
     // Get all characters
     for (let i = 1; i <= numberOfPagesLeft; i++) {
       const response: CharactersDataResponse = await axios.get(
-        `https://swapi.dev/api/people/?page=${i}`
+        `${BASE_API_URL}/people/?page=${i}`
       );
       characters.push(...response.data.results);
     }
@@ -31,7 +33,7 @@ export async function getAllStarWarsCharacters() {
 export async function getCharacterById(id: string) {
   try {
     const response: CharacterDataResponse = await axios.get(
-      `https://swapi.dev/api/people/${id}`
+      `${BASE_API_URL}people/${id}`
     );
 
     return response.data;
@@ -43,7 +45,7 @@ export async function getCharacterById(id: string) {
 export async function getAllStarWarsFilmsByCharacter(characterId: string) {
   try {
     const response: FilmsDataResponse = await axios.get(
-      `https://swapi.dev/api/films/?name=${characterId}`
+      `${BASE_API_URL}/films/?name=${characterId}`
     );
 
     return response.data.results;
@@ -55,7 +57,7 @@ export async function getAllStarWarsFilmsByCharacter(characterId: string) {
 export async function getAllStarWarsStarShipsByCharacter(characterId: string) {
   try {
     const response: CharacterDataResponse = await axios.get(
-      `https://swapi.dev/api/people/${characterId}`
+      `${BASE_API_URL}/people/${characterId}`
     );
     // Get all star ships data
     const starshipResponse = [];
