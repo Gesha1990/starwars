@@ -11,18 +11,20 @@ export const getNumberFromString = (string: string) => {
 
 export function getStarShipEdgesOrNodes<isEdgesType extends boolean>(
   starWarsShips: Starship[],
-  isEdges: isEdgesType,
-  filmsNodes?: StarShipEdge[]
+  isEdges: isEdgesType
 ): If<isEdgesType, StarShipEdge[], StarShipNode[]> {
   let starShipsEdgesOrNodes: StarShipEdge[] & StarShipNode[] = [];
   starWarsShips.forEach((starShip, keyStarShip) => {
     const starShipId = getNumberFromString(starShip.url);
+    const startShipsFilmsIds = starShip.films.map((url) =>
+      getNumberFromString(url)
+    );
 
-    if (isEdges && filmsNodes) {
-      filmsNodes.forEach((film) => {
+    if (isEdges) {
+      startShipsFilmsIds.forEach((filmId) => {
         starShipsEdgesOrNodes.push({
           id: `provider3-${starShipId}`,
-          source: `${film.id}`,
+          source: `provider2-${filmId}`,
           target: `provider3-${starShipId}`
         });
       });

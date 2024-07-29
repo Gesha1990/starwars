@@ -26,8 +26,9 @@ const initialNodes = (
   const characterId = getNumberFromString(character.url);
 
   const filmsNodes = films.map((film, key) => {
+    const filmId = getNumberFromString(film.url);
     return {
-      id: `provider2-${film.episode_id}`,
+      id: `provider2-${filmId}`,
       data: { label: `${film.title}` },
       position: { x: key * 150, y: 100 },
       width: 100
@@ -56,14 +57,16 @@ const initialEdges = (
   const arrFilms = films.map((film) => {
     const characterId = getNumberFromString(character.url);
 
+    const filmId = getNumberFromString(film.url);
+
     return {
-      id: `provider2-${film.episode_id}`,
+      id: `provider2-${filmId}`,
       source: `provider-${characterId}`,
-      target: `provider2-${film.episode_id}`
+      target: `provider2-${filmId}`
     };
   });
 
-  const shipsArr = getStarShipEdgesOrNodes(starWarsShips, true, arrFilms);
+  const shipsArr = getStarShipEdgesOrNodes(starWarsShips, true);
 
   return [...arrFilms, ...shipsArr];
 };
