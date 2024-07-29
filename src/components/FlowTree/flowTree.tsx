@@ -63,7 +63,7 @@ const initialEdges = (
     };
   });
 
-  const shipsArr = getStarShipEdgesOrNodes(starWarsShips, true);
+  const shipsArr = getStarShipEdgesOrNodes(starWarsShips, true, arrFilms);
 
   return [...arrFilms, ...shipsArr];
 };
