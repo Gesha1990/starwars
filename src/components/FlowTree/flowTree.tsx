@@ -10,7 +10,11 @@ import {
   Connection
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import { getNumberFromString, getStarShipEdgesOrNodes } from '@/utils/utils';
+import {
+  getFilmsEdgesOrNodes,
+  getNumberFromString,
+  getStarShipEdgesOrNodes
+} from '@/utils/utils';
 import {
   Character,
   Film,
@@ -25,15 +29,7 @@ const initialNodes = (
 ) => {
   const characterId = getNumberFromString(character.url);
 
-  const filmsNodes = films.map((film, key) => {
-    const filmId = getNumberFromString(film.url);
-    return {
-      id: `provider2-${filmId}`,
-      data: { label: `${film.title}` },
-      position: { x: key * 150, y: 100 },
-      width: 100
-    };
-  });
+  const filmsNodes = getFilmsEdgesOrNodes(films, character.url, false);
   const starShipsNodes = getStarShipEdgesOrNodes(starWarsShips, false);
 
   return [
@@ -54,17 +50,7 @@ const initialEdges = (
   films: Film[],
   starWarsShips: Starship[]
 ) => {
-  const arrFilms = films.map((film) => {
-    const characterId = getNumberFromString(character.url);
-
-    const filmId = getNumberFromString(film.url);
-
-    return {
-      id: `provider2-${filmId}`,
-      source: `provider-${characterId}`,
-      target: `provider2-${filmId}`
-    };
-  });
+  const arrFilms = getFilmsEdgesOrNodes(films, character.url, true);
 
   const shipsArr = getStarShipEdgesOrNodes(starWarsShips, true);
 
