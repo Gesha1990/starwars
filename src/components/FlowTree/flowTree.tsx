@@ -28,21 +28,17 @@ const initialNodes = (
   starWarsShips: Starship[]
 ) => {
   const characterId = getNumberFromString(character.url);
-
+  const mainCharacterNode = {
+    id: `provider-${characterId}`,
+    data: {
+      label: character.name
+    },
+    position: { x: 250, y: 5 }
+  };
   const filmsNodes = getFilmsEdgesOrNodes(films, character.url, false);
   const starShipsNodes = getStarShipEdgesOrNodes(starWarsShips, false);
 
-  return [
-    {
-      id: `provider-${characterId}`,
-      data: {
-        label: character.name
-      },
-      position: { x: 250, y: 5 }
-    },
-    ...filmsNodes,
-    ...starShipsNodes
-  ];
+  return [mainCharacterNode, ...filmsNodes, ...starShipsNodes];
 };
 
 const initialEdges = (
@@ -50,11 +46,11 @@ const initialEdges = (
   films: Film[],
   starWarsShips: Starship[]
 ) => {
-  const arrFilms = getFilmsEdgesOrNodes(films, character.url, true);
+  const arrFilmsEdges = getFilmsEdgesOrNodes(films, character.url, true);
 
-  const shipsArr = getStarShipEdgesOrNodes(starWarsShips, true);
+  const shipsArrEdges = getStarShipEdgesOrNodes(starWarsShips, true);
 
-  return [...arrFilms, ...shipsArr];
+  return [...arrFilmsEdges, ...shipsArrEdges];
 };
 
 export const FlowTree = ({
