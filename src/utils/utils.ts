@@ -19,12 +19,10 @@ export function getStarShipEdgesOrNodes<isEdgesType extends boolean>(
     const filmIds = starShip.films.map((film) => getNumberFromString(film));
 
     if (isEdges) {
-      filmIds.forEach((filmId) => {
-        starShipsEdgesOrNodes.push({
-          id: `provider3-${filmId}-${starShipId}`,
-          source: `provider2-${filmId}`,
-          target: `provider3-${filmId}-${starShipId}`
-        });
+      starShipsEdgesOrNodes.push({
+        id: `provider3-${starShipId}-3`,
+        source: `provider2-${starShipId}`,
+        target: `provider3-${starShipId}`
       });
     } else {
       filmIds.forEach((filmId) => {
@@ -36,15 +34,6 @@ export function getStarShipEdgesOrNodes<isEdgesType extends boolean>(
           position: { x: 170 * keyStarShip, y: 200 }
         });
       });
-      // deleted all duplicates
-      starShipsEdgesOrNodes = [
-        ...(new Map(
-          starShipsEdgesOrNodes.map((item: StarShipNode) => [
-            item.data.label,
-            item
-          ])
-        ).values() as any)
-      ];
     }
   });
   return starShipsEdgesOrNodes;
