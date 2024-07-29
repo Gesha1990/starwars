@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { mockCharacter, mockFilms } from '@/mock/mock';
+import { mockCharacter, mockFilms, mockStarShips } from '@/mock/mock';
 import Page from '../page';
 import axios from 'axios';
 let apiFunctions = require('@/api/api');
@@ -9,9 +9,7 @@ jest.mock('axios', () => {
   return {
     get: () => {
       return {
-        data: {
-          results: []
-        }
+        data: mockStarShips.results[0]
       };
     }
   };
@@ -42,14 +40,14 @@ describe('Check character page working', () => {
     const jsx = await Page({ params: { id: '2' } });
     const document = render(jsx);
     expect(document.getByText('Star Wars Tree')).toBeDefined();
-    expect(spy).toHaveBeenCalledTimes(3);
+    expect(spy).toHaveBeenCalledTimes(4);
   });
   it('Check calling all api functions', async function () {
     jest.mock('@/api/api', () => {
       return {
         getCharacterById: jest.fn(() => mockCharacter),
         getAllStarWarsFilmsByCharacter: jest.fn(() => mockFilms),
-        getAllStarWarsStarShipsByCharacter: jest.fn(() => mockFilms)
+        getAllStarWarsStarShipsByCharacter: jest.fn(() => mockStarShips)
       };
     });
     const spy = jest.spyOn(apiFunctions, 'getAllStarWarsFilmsByCharacter');
