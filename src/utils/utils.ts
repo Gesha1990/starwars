@@ -20,19 +20,17 @@ export function getStarShipEdgesOrNodes<isEdgesType extends boolean>(
 
     if (isEdges) {
       starShipsEdgesOrNodes.push({
-        id: `provider3-${starShipId}-3`,
+        id: `provider3-${starShipId}`,
         source: `provider2-${starShipId}`,
         target: `provider3-${starShipId}`
       });
     } else {
-      filmIds.forEach((filmId) => {
-        starShipsEdgesOrNodes.push({
-          id: `provider3-${filmId}-${starShipId}`,
-          data: {
-            label: starShip.name
-          },
-          position: { x: 170 * keyStarShip, y: 200 }
-        });
+      starShipsEdgesOrNodes.push({
+        id: `provider3-${starShipId}`,
+        data: {
+          label: starShip.name
+        },
+        position: { x: 170 * keyStarShip, y: 200 }
       });
     }
   });
