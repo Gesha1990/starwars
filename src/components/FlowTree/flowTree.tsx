@@ -55,6 +55,7 @@ const initialEdges = (
 ) => {
   const arrFilms = films.map((film) => {
     const characterId = getNumberFromString(character.url);
+
     return {
       id: `provider2-${film.episode_id}`,
       source: `provider-${characterId}`,

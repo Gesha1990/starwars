@@ -72,6 +72,7 @@ export async function getAllStarWarsStarShipsByCharacter(characterId: string) {
         starshipResponse.push(response.data);
       }
     }
+
     return starshipResponse;
   } catch (e) {
     console.error('Error retrieving data:', e);
