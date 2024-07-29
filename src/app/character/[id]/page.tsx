@@ -23,6 +23,7 @@ export default async function Page({ params }: CharacterPageProps) {
   const filmsResponse = await getAllStarWarsFilmsByCharacter(params.id);
 
   const starWarsShipsArr = await getAllStarWarsStarShipsByCharacter(params.id);
+
   return (
     <div className="min-h-screen">
       <div className="flex justify-center">

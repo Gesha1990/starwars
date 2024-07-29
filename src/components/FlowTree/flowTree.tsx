@@ -24,6 +24,7 @@ const initialNodes = (
   starWarsShips: Starship[]
 ) => {
   const characterId = getNumberFromString(character.url);
+
   const filmsNodes = films.map((film, key) => {
     return {
       id: `provider2-${film.episode_id}`,
@@ -54,14 +55,15 @@ const initialEdges = (
 ) => {
   const arrFilms = films.map((film) => {
     const characterId = getNumberFromString(character.url);
-
     return {
       id: `provider2-${film.episode_id}`,
       source: `provider-${characterId}`,
       target: `provider2-${film.episode_id}`
     };
   });
+
   const shipsArr = getStarShipEdgesOrNodes(starWarsShips, true);
+
   return [...arrFilms, ...shipsArr];
 };
 

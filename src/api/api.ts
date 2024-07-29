@@ -1,9 +1,9 @@
 import axios from 'axios';
 import {
-  FilmsDataResponse,
   CharactersDataResponse,
   Character,
-  CharacterDataResponse
+  CharacterDataResponse,
+  Film
 } from '../interfaces/interfaces';
 import { BASE_API_URL, NUMBER_CHARACTERS_PER_PAGE } from './const';
 
@@ -44,11 +44,16 @@ export async function getCharacterById(id: string) {
 }
 export async function getAllStarWarsFilmsByCharacter(characterId: string) {
   try {
-    const response: FilmsDataResponse = await axios.get(
-      `${BASE_API_URL}/films/?name=${characterId}`
+    const response: CharacterDataResponse = await axios.get(
+      `${BASE_API_URL}/people/${characterId}`
     );
 
-    return response.data.results;
+    const films: Film[] = [];
+    for (const url of response.data.films) {
+      const response = await axios.get(`${url}`);
+      films.push(response.data);
+    }
+    return films;
   } catch (e) {
     console.error('Error retrieving data:', e);
     throw new Error('Request failed');
