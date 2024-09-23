@@ -16,7 +16,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <header className="p-5">
-          <Link href="/"> Characters</Link>
+          <Link href="/characters/:1"> Characters</Link>
         </header>
         {children}
       </body>

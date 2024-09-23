@@ -25,7 +25,20 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
-
+h1 {
+  display: flex;
+  justify-content: center;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+.pagination li {
+  padding: 5px;
+}
+.selected {
+  font-weight: bold;
+}
 @layer utilities {
   .text-balance {
     text-wrap: balance;

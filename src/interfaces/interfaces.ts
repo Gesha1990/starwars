@@ -100,9 +100,9 @@ export interface FlowTreeProps {
   films: Film[];
   starWarsShips: Starship[];
 }
-export interface CharacterPageProps {
+export interface PageProps {
   params: {
-    id: string;
+    slug: string;
   };
 }
 export type If<F extends boolean, S, T> = F extends true ? S : T;

@@ -1,10 +1,9 @@
 import {
   getCharacterById,
   getAllStarWarsFilmsByCharacter,
-  getAllStarWarsCharacters,
   getAllStarWarsStarShipsByCharacter
 } from '@/api/api';
-import { Character, CharacterPageProps } from '@/interfaces/interfaces';
+import { Character, PageProps } from '@/interfaces/interfaces';
 import { FlowTree } from '@/components';
 import { getNumberFromString } from '@/utils/utils';
 
@@ -17,12 +16,14 @@ export async function generateStaticParams() {
   });
 }
 
-export default async function Page({ params }: CharacterPageProps) {
-  const character = await getCharacterById(params.id);
+export default async function Page({ params }: PageProps) {
+  const character = await getCharacterById(params.slug);
 
-  const filmsResponse = await getAllStarWarsFilmsByCharacter(params.id);
+  const filmsResponse = await getAllStarWarsFilmsByCharacter(params.slug);
 
-  const starWarsShipsArr = await getAllStarWarsStarShipsByCharacter(params.id);
+  const starWarsShipsArr = await getAllStarWarsStarShipsByCharacter(
+    params.slug
+  );
 
   return (
     <div className="min-h-screen">

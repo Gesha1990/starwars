@@ -7,24 +7,29 @@ import {
 } from '../interfaces/interfaces';
 import { BASE_API_URL, NUMBER_CHARACTERS_PER_PAGE } from './const';
 
-export async function getAllStarWarsCharacters() {
+export async function getStarWarsCharactersPages() {
   try {
     const response: CharactersDataResponse = await axios.get(
       `${BASE_API_URL}/people/`
     );
     const countCharacters = response.data.count;
-    const numberOfPagesLeft = Math.ceil(
+    const numberOfPages = Math.ceil(
       countCharacters / NUMBER_CHARACTERS_PER_PAGE
     );
-    const characters: Character[] = [];
-    // Get all characters
-    for (let i = 1; i <= numberOfPagesLeft; i++) {
-      const response: CharactersDataResponse = await axios.get(
-        `${BASE_API_URL}/people/?page=${i}`
-      );
-      characters.push(...response.data.results);
-    }
-    return characters;
+
+    return numberOfPages;
+  } catch (e) {
+    console.error('Error retrieving data:', e);
+    throw new Error('Request failed');
+  }
+}
+export async function getStarWarsCharactersByPage(page: string) {
+  try {
+    const response: CharactersDataResponse = await axios.get(
+      `${BASE_API_URL}/people/?page=${page}`
+    );
+    console.log(response, 111);
+    return response.data.results;
   } catch (e) {
     console.error('Error retrieving data:', e);
     throw new Error('Request failed');
