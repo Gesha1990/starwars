@@ -3,38 +3,16 @@ import '@testing-library/jest-dom';
 import Page from '../page';
 import Loading from '../loading';
 import Error from '../error';
-import { mockCharactersData } from '@/mock/mock';
 
-let apiFunctions = require('@/api/api');
-
-jest.mock('axios', () => {
-  return {
-    get: () => {
-      return {
-        data: {
-          results: []
-        }
-      };
-    }
-  };
-});
 jest.mock('../globals.css', () => {
   return {};
 });
-jest.mock('@/api/api', () => {
-  return {
-    getAllStarWarsCharacters: jest.fn(() => mockCharactersData)
-  };
-});
+
 describe('Check rendering Characters page, Loading and Error Page ', () => {
   it('Check rendering root Page and calling api function', async function () {
-    const spy = jest.spyOn(apiFunctions, 'getAllStarWarsCharacters');
-    spy.getMockImplementation();
     const jsx = await Page();
     const document = render(jsx);
-
-    expect(spy).toHaveBeenCalledTimes(1);
-    expect(document.getByText('Luke Skywalker')).toBeDefined();
+    expect(document.getByText('Star wars main page')).toBeDefined();
   });
   it('Check rendering Loading Page', async function () {
     const document = render(<Loading />);

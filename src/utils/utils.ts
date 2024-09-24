@@ -11,35 +11,41 @@ export const getNumberFromString = (string: string) => {
   return strArr[0];
 };
 
-export function getStarShipEdgesOrNodes<isEdgesType extends boolean>(
-  starWarsShips: Starship[],
-  isEdges: isEdgesType
-): If<isEdgesType, StarShipEdge[], StarShipNode[]> {
-  let starShipsEdgesOrNodes: StarShipEdge[] & StarShipNode[] = [];
+export function getStarShipEdges(starWarsShips: Starship[]): StarShipEdge[] {
+  let starShipsEdges: StarShipEdge[] = [];
   starWarsShips.forEach((starShip, key) => {
     const starShipId = getNumberFromString(starShip.url);
     const startShipsFilmsIds = starShip.films.map((url) =>
       getNumberFromString(url)
     );
     startShipsFilmsIds.forEach((filmId) => {
-      if (isEdges) {
-        starShipsEdgesOrNodes.push({
-          id: `provider3-${filmId}-${starShipId}`,
-          source: `provider2-${filmId}`,
-          target: `provider3-${filmId}-${starShipId}`
-        });
-      } else {
-        starShipsEdgesOrNodes.push({
-          id: `provider3-${filmId}-${starShipId}`,
-          data: {
-            label: starShip.name
-          },
-          position: { x: 170 * key, y: 200 }
-        });
-      }
+      starShipsEdges.push({
+        id: `provider3-${filmId}-${starShipId}`,
+        source: `provider2-${filmId}`,
+        target: `provider3-${filmId}-${starShipId}`
+      });
     });
   });
-  return starShipsEdgesOrNodes;
+  return starShipsEdges;
+}
+export function getStarShipNodes(starWarsShips: Starship[]): StarShipNode[] {
+  let starShipsNodes: StarShipNode[] = [];
+  starWarsShips.forEach((starShip, key) => {
+    const starShipId = getNumberFromString(starShip.url);
+    const startShipsFilmsIds = starShip.films.map((url) =>
+      getNumberFromString(url)
+    );
+    startShipsFilmsIds.forEach((filmId) => {
+      starShipsNodes.push({
+        id: `provider3-${filmId}-${starShipId}`,
+        data: {
+          label: starShip.name
+        },
+        position: { x: 170 * key, y: 200 }
+      });
+    });
+  });
+  return starShipsNodes;
 }
 export function getFilmsEdgesOrNodes<isEdgesType extends boolean>(
   starWarsFilms: Film[],

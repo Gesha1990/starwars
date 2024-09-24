@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 export const Pagination = () => {
   const router = useRouter();
   const handlePageClick = (event: { selected: number }): void => {
-    router.push(`${event.selected++}`);
+    router.prefetch(`${event.selected++}`);
   };
   const pageCount = 8;
   return (

@@ -13,7 +13,8 @@ import '@xyflow/react/dist/style.css';
 import {
   getFilmsEdgesOrNodes,
   getNumberFromString,
-  getStarShipEdgesOrNodes
+  getStarShipEdges,
+  getStarShipNodes
 } from '@/utils/utils';
 import {
   Character,
@@ -36,7 +37,7 @@ const initialNodes = (
     position: { x: 250, y: 5 }
   };
   const filmsNodes = getFilmsEdgesOrNodes(films, character.url, false);
-  const starShipsNodes = getStarShipEdgesOrNodes(starWarsShips, false);
+  const starShipsNodes = getStarShipNodes(starWarsShips);
 
   return [mainCharacterNode, ...filmsNodes, ...starShipsNodes];
 };
@@ -48,7 +49,7 @@ const initialEdges = (
 ) => {
   const arrFilmsEdges = getFilmsEdgesOrNodes(films, character.url, true);
 
-  const shipsArrEdges = getStarShipEdgesOrNodes(starWarsShips, true);
+  const shipsArrEdges = getStarShipEdges(starWarsShips);
 
   return [...arrFilmsEdges, ...shipsArrEdges];
 };

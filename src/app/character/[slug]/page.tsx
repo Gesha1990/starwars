@@ -3,18 +3,8 @@ import {
   getAllStarWarsFilmsByCharacter,
   getAllStarWarsStarShipsByCharacter
 } from '@/api/api';
-import { Character, PageProps } from '@/interfaces/interfaces';
 import { FlowTree } from '@/components';
-import { getNumberFromString } from '@/utils/utils';
-
-export async function generateStaticParams() {
-  const characters = await getAllStarWarsCharacters();
-
-  return characters.map((character: Character) => {
-    const characterId = getNumberFromString(character.url);
-    return { id: `${characterId}` };
-  });
-}
+import { PageProps } from '@/interfaces/interfaces';
 
 export default async function Page({ params }: PageProps) {
   const character = await getCharacterById(params.slug);

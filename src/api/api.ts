@@ -28,7 +28,6 @@ export async function getStarWarsCharactersByPage(page: string) {
     const response: CharactersDataResponse = await axios.get(
       `${BASE_API_URL}/people/?page=${page}`
     );
-    console.log(response, 111);
     return response.data.results;
   } catch (e) {
     console.error('Error retrieving data:', e);
