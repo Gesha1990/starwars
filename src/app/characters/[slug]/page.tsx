@@ -20,11 +20,14 @@ export default async function Page({ params }: PageProps) {
   const { characters, numberOfPages } = await getStarWarsCharactersByPage(
     params.slug
   );
-
+  let startLiNumber = getNumberFromString(characters[0].url);
   return (
     <div className="min-h-screen">
       <div className="z-10 w-full max-w-5xl font-mono text-sm">
-        <ul className="list-decimal list-inside w-fit flex-col p-10 pt-0">
+        <ol
+          className="list-decimal list-inside w-fit flex-col p-10 pt-0"
+          start={Number(startLiNumber)}
+        >
           {characters.map(({ name, url }) => {
             const characterId = getNumberFromString(url);
             return (
@@ -33,7 +36,7 @@ export default async function Page({ params }: PageProps) {
               </Link>
             );
           })}
-        </ul>
+        </ol>
       </div>
       <Pagination numberOfPages={numberOfPages} pageNumber={params.slug} />
     </div>
