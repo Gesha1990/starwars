@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 export const Pagination = ({ numberOfPages }: { numberOfPages: number }) => {
   const router = useRouter();
   const handlePageClick = (event: { selected: number }): void => {
-    router.prefetch(`${event.selected++}`);
+    router.push(`${event.selected++}`);
   };
   return (
     <ReactPaginate
