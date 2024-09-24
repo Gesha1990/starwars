@@ -28,7 +28,11 @@ export async function getStarWarsCharactersByPage(page: string) {
     const response: CharactersDataResponse = await axios.get(
       `${BASE_API_URL}/people/?page=${page}`
     );
-    return response.data.results;
+    const countCharacters = response.data.count;
+    const numberOfPages = Math.ceil(
+      countCharacters / NUMBER_CHARACTERS_PER_PAGE
+    );
+    return { characters: response.data.results, numberOfPages };
   } catch (e) {
     console.error('Error retrieving data:', e);
     throw new Error('Request failed');

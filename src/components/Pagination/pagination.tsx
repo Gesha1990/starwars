@@ -2,18 +2,17 @@
 import ReactPaginate from 'react-paginate';
 import { useRouter } from 'next/navigation';
 
-export const Pagination = () => {
+export const Pagination = ({ numberOfPages }: { numberOfPages: number }) => {
   const router = useRouter();
   const handlePageClick = (event: { selected: number }): void => {
     router.prefetch(`${event.selected++}`);
   };
-  const pageCount = 8;
   return (
     <ReactPaginate
       breakLabel="..."
       nextLabel="next >"
       onPageChange={handlePageClick}
-      pageCount={pageCount}
+      pageCount={numberOfPages}
       previousLabel="< previous"
       className="pagination"
     />

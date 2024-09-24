@@ -17,7 +17,9 @@ export async function generateStaticParams() {
 }
 
 export default async function Page({ params }: PageProps) {
-  const characters = await getStarWarsCharactersByPage(params.slug);
+  const { characters, numberOfPages } = await getStarWarsCharactersByPage(
+    params.slug
+  );
 
   return (
     <div className="min-h-screen">
@@ -33,7 +35,7 @@ export default async function Page({ params }: PageProps) {
           })}
         </ul>
       </div>
-      <Pagination />
+      <Pagination numberOfPages={numberOfPages} />
     </div>
   );
 }
