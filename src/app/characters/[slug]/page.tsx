@@ -35,7 +35,7 @@ export default async function Page({ params }: PageProps) {
           })}
         </ul>
       </div>
-      <Pagination numberOfPages={numberOfPages} />
+      <Pagination numberOfPages={numberOfPages} pageNumber={params.slug} />
     </div>
   );
 }
